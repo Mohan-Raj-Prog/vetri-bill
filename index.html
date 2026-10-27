@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#E0AC0F">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Vetri Bill">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="style.css">
+<title>Vetri Travels Bill</title>
+</head>
+<body>
+<header class="banner">
+  <img id="bannerLogo" src="logo.png" alt="">
+  <div>
+    <div class="banner-title" id="bannerName">VETRI TRAVELS</div>
+    <div class="banner-sub">Cab Bill Generator &middot; works offline</div>
+  </div>
+</header>
+
+<main>
+  <!-- ============ NEW BILL ============ -->
+  <section id="view-new" class="view active">
+    <div id="editingNote" class="note hidden"></div>
+    <div id="formCards"></div>
+    <div class="spacer"></div>
+  </section>
+
+  <!-- ============ HISTORY ============ -->
+  <section id="view-history" class="view">
+    <input id="searchBox" class="search" type="search" placeholder="🔍 Search bill no, customer, place...">
+    <div id="historyList"></div>
+    <div id="historyEmpty" class="empty hidden">No bills yet. Create your first bill in the <b>New Bill</b> tab.</div>
+    <div class="spacer"></div>
+  </section>
+
+  <!-- ============ SETTINGS ============ -->
+  <section id="view-settings" class="view">
+    <div id="settingsCards"></div>
+
+    <div class="card" style="--c:#6A1B9A">
+      <div class="card-title">🖼️ Logo</div>
+      <div class="logo-row">
+        <img id="settingsLogo" src="logo.png" alt="logo">
+        <div class="logo-btns">
+          <label class="btn small purple">Change logo<input id="logoFile" type="file" accept="image/*" hidden></label>
+          <button class="btn small grey" id="logoReset" type="button">Use default logo</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="--c:#2E7D32">
+      <div class="card-title">💾 Backup &amp; Restore</div>
+      <p class="hint">Bills are stored only on this phone. Take a backup now and then (and before changing phone or clearing browser data).</p>
+      <div class="btn-row">
+        <button class="btn green" id="btnBackup" type="button">⬇️ Backup bills</button>
+        <label class="btn blue">⬆️ Restore<input id="restoreFile" type="file" accept=".json,application/json" hidden></label>
+      </div>
+      <div id="backupInfo" class="hint"></div>
+    </div>
+
+    <div class="card" style="--c:#00838F">
+      <div class="card-title">📲 Install on home screen</div>
+      <p class="hint">Chrome menu (⋮) → <b>Add to Home screen</b> / <b>Install app</b>. After that it opens like a normal app, even with no internet.</p>
+      <div id="installStatus" class="hint"></div>
+      <button class="btn blue hidden" id="btnInstall" type="button">Install app</button>
+    </div>
+    <div class="spacer"></div>
+  </section>
+</main>
+
+<!-- sticky total + main actions (new bill tab only) -->
+<div id="actionBar" class="action-bar">
+  <div class="total-bar"><span id="totalText">Total: -</span><small id="totalWords"></small></div>
+  <div class="btn-row">
+    <button class="btn green grow" id="btnSave" type="button">💾 Save &amp; PDF</button>
+    <button class="btn orange" id="btnNew" type="button">➕ New</button>
+  </div>
+</div>
+
+<nav class="tabs">
+  <button class="tab active" data-view="new" type="button"><span>🧾</span>New Bill</button>
+  <button class="tab" data-view="history" type="button"><span>📚</span>History</button>
+  <button class="tab" data-view="settings" type="button"><span>⚙️</span>Settings</button>
+</nav>
+
+<!-- result sheet -->
+<div id="sheet" class="sheet hidden" role="dialog" aria-modal="true">
+  <div class="sheet-body">
+    <div class="sheet-title" id="sheetTitle">Bill ready</div>
+    <div class="sheet-sub" id="sheetSub"></div>
+    <div class="btn-col">
+      <button class="btn green" id="shShare" type="button">📤 Share / WhatsApp</button>
+      <button class="btn blue" id="shDownload" type="button">⬇️ Download PDF</button>
+      <button class="btn purple" id="shOpen" type="button">👁️ Open PDF</button>
+      <button class="btn grey" id="shClose" type="button">Close</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+<script src="lib/jspdf.umd.min.js"></script>
+<script src="bill_pdf.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
